@@ -71,6 +71,7 @@ async function uploadDocuments(
       body: formData,
       headers: {
         Authorization: `Bearer ${authorization}`,
+        Date: new Date().toUTCString(),
       },
     });
 
@@ -219,6 +220,7 @@ export function useRag(): UseRagReturn {
         method: "POST",
         headers: {
           Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
         },
       });
       if (!response.ok) {
@@ -260,6 +262,7 @@ export function useRag(): UseRagReturn {
       const response = await fetch(url.toString(), {
         headers: {
           Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
         },
       });
       if (!response.ok) {
@@ -292,6 +295,7 @@ export function useRag(): UseRagReturn {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
         },
       });
       if (!response.ok) {
@@ -400,6 +404,7 @@ export function useRag(): UseRagReturn {
       const response = await fetch(url.toString(), {
         headers: {
           Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
         },
       });
       if (!response.ok) {
@@ -450,6 +455,7 @@ export function useRag(): UseRagReturn {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
         },
         body: JSON.stringify(newCollection),
       });
@@ -523,6 +529,7 @@ export function useRag(): UseRagReturn {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
         },
         body: JSON.stringify(updateData),
       });
@@ -578,6 +585,7 @@ export function useRag(): UseRagReturn {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
         },
       });
 
