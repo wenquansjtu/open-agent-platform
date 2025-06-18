@@ -65,14 +65,31 @@ async function uploadDocuments(
     formData.append("metadatas_json", metadatasJsonString);
   }
 
+  const headers = new Headers();
+  headers.set("Authorization", `Bearer ${authorization}`);
+  headers.set("Date", new Date().toUTCString());
+
+  // Debug: Log the headers to see if Date is being set
+  console.log("Upload Documents Headers:", {
+    Authorization: headers.get("Authorization"),
+    Date: headers.get("Date"),
+  });
+
+  // Debug: Add a request interceptor to see what's actually sent
+  const originalFetch = window.fetch;
+  window.fetch = function(...args) {
+    console.log("Fetch called with args:", args);
+    if (args[1] && args[1].headers) {
+      console.log("Request headers:", args[1].headers);
+    }
+    return originalFetch.apply(this, args);
+  };
+
   try {
     const response = await fetch(url, {
       method: "POST",
       body: formData,
-      headers: {
-        Authorization: `Bearer ${authorization}`,
-        Date: new Date().toUTCString(),
-      },
+      headers,
     });
 
     if (!response.ok) {
@@ -216,12 +233,14 @@ export function useRag(): UseRagReturn {
 
       const url = getApiUrlOrThrow();
       url.pathname = "/admin/initialize-database";
+      
+      const headers = new Headers();
+      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+      
       const response = await fetch(url.toString(), {
         method: "POST",
-        headers: {
-          Authorization: `Bearer ${accessToken || session?.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
       });
       if (!response.ok) {
         throw new Error(
@@ -259,11 +278,12 @@ export function useRag(): UseRagReturn {
         url.searchParams.set("offset", args.offset.toString());
       }
 
+      const headers = new Headers();
+      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+
       const response = await fetch(url.toString(), {
-        headers: {
-          Authorization: `Bearer ${accessToken || session?.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
       });
       if (!response.ok) {
         throw new Error(`Failed to fetch documents: ${response.statusText}`);
@@ -291,12 +311,13 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = `/collections/${selectedCollection.uuid}/documents/${id}`;
 
+      const headers = new Headers();
+      headers.set("Authorization", `Bearer ${session.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+
       const response = await fetch(url.toString(), {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${session.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
       });
       if (!response.ok) {
         throw new Error(`Failed to delete document: ${response.statusText}`);
@@ -401,11 +422,12 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = "/collections";
 
+      const headers = new Headers();
+      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+
       const response = await fetch(url.toString(), {
-        headers: {
-          Authorization: `Bearer ${accessToken || session?.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
       });
       if (!response.ok) {
         throw new Error(`Failed to fetch collections: ${response.statusText}`);
@@ -450,13 +472,15 @@ export function useRag(): UseRagReturn {
         name: trimmedName,
         metadata,
       };
+      
+      const headers = new Headers();
+      headers.set("Content-Type", "application/json");
+      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+      
       const response = await fetch(url.toString(), {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken || session?.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
         body: JSON.stringify(newCollection),
       });
       if (!response.ok) {
@@ -524,13 +548,14 @@ export function useRag(): UseRagReturn {
         metadata: metadata,
       };
 
+      const headers = new Headers();
+      headers.set("Content-Type", "application/json");
+      headers.set("Authorization", `Bearer ${session.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+
       const response = await fetch(url.toString(), {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${session.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
         body: JSON.stringify(updateData),
       });
 
@@ -581,12 +606,13 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = `/collections/${collectionId}`;
 
+      const headers = new Headers();
+      headers.set("Authorization", `Bearer ${session.accessToken}`);
+      headers.set("Date", new Date().toUTCString());
+
       const response = await fetch(url.toString(), {
         method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${session.accessToken}`,
-          Date: new Date().toUTCString(),
-        },
+        headers,
       });
 
       if (!response.ok) {
