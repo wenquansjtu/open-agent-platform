@@ -31,7 +31,7 @@ export function getCollectionName(name: string | undefined) {
 /**
  * Uploads documents to a specific collection using the API.
  *
- * @param collectionId The name of the collection to add documents to.
+ * @param collectionName The name of the collection to add documents to.
  * @param files An array of File objects to upload.
  * @param metadatas Optional array of metadata objects, one for each file.
  *                  Each item in the array should be a serializable object (dictionary).
@@ -65,31 +65,14 @@ async function uploadDocuments(
     formData.append("metadatas_json", metadatasJsonString);
   }
 
-  const headers = new Headers();
-  headers.set("Authorization", `Bearer ${authorization}`);
-  headers.set("Date", new Date().toUTCString());
-
-  // Debug: Log the headers to see if Date is being set
-  console.log("Upload Documents Headers:", {
-    Authorization: headers.get("Authorization"),
-    Date: headers.get("Date"),
-  });
-
-  // Debug: Add a request interceptor to see what's actually sent
-  const originalFetch = window.fetch;
-  window.fetch = function(...args) {
-    console.log("Fetch called with args:", args);
-    if (args[1] && args[1].headers) {
-      console.log("Request headers:", args[1].headers);
-    }
-    return originalFetch.apply(this, args);
-  };
-
   try {
     const response = await fetch(url, {
       method: "POST",
       body: formData,
-      headers,
+      headers: {
+        Authorization: `Bearer ${authorization}`,
+        Date: new Date().toUTCString(),
+      },
     });
 
     if (!response.ok) {
@@ -233,14 +216,12 @@ export function useRag(): UseRagReturn {
 
       const url = getApiUrlOrThrow();
       url.pathname = "/admin/initialize-database";
-      
-      const headers = new Headers();
-      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-      
       const response = await fetch(url.toString(), {
         method: "POST",
-        headers,
+        headers: {
+          Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
       });
       if (!response.ok) {
         throw new Error(
@@ -278,12 +259,11 @@ export function useRag(): UseRagReturn {
         url.searchParams.set("offset", args.offset.toString());
       }
 
-      const headers = new Headers();
-      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-
       const response = await fetch(url.toString(), {
-        headers,
+        headers: {
+          Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
       });
       if (!response.ok) {
         throw new Error(`Failed to fetch documents: ${response.statusText}`);
@@ -311,20 +291,19 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = `/collections/${selectedCollection.uuid}/documents/${id}`;
 
-      const headers = new Headers();
-      headers.set("Authorization", `Bearer ${session.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-
       const response = await fetch(url.toString(), {
         method: "DELETE",
-        headers,
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
       });
       if (!response.ok) {
         throw new Error(`Failed to delete document: ${response.statusText}`);
       }
 
-      setDocuments((prevDocs: Document[]) =>
-        prevDocs.filter((doc: Document) => doc.metadata.file_id !== id),
+      setDocuments((prevDocs) =>
+        prevDocs.filter((doc) => doc.metadata.file_id !== id),
       );
     },
     [selectedCollection, session],
@@ -364,7 +343,7 @@ export function useRag(): UseRagReturn {
         session.accessToken,
         newDocs.map((d) => d.metadata),
       );
-      setDocuments((prevDocs: Document[]) => [...prevDocs, ...newDocs]);
+      setDocuments((prevDocs) => [...prevDocs, ...newDocs]);
     },
     [session],
   );
@@ -395,7 +374,7 @@ export function useRag(): UseRagReturn {
       await uploadDocuments(collectionId, [textFile], session.accessToken, [
         metadata,
       ]);
-      setDocuments((prevDocs: Document[]) => [
+      setDocuments((prevDocs) => [
         ...prevDocs,
         new Document({
           id: uuidv4(),
@@ -422,12 +401,11 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = "/collections";
 
-      const headers = new Headers();
-      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-
       const response = await fetch(url.toString(), {
-        headers,
+        headers: {
+          Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
       });
       if (!response.ok) {
         throw new Error(`Failed to fetch collections: ${response.statusText}`);
@@ -461,7 +439,7 @@ export function useRag(): UseRagReturn {
         return undefined;
       }
       const nameExists = collections.some(
-        (c: Collection) => c.name.toLowerCase() === trimmedName.toLowerCase(),
+        (c) => c.name.toLowerCase() === trimmedName.toLowerCase(),
       );
       if (nameExists) {
         console.warn(`Collection with name "${trimmedName}" already exists.`);
@@ -472,15 +450,13 @@ export function useRag(): UseRagReturn {
         name: trimmedName,
         metadata,
       };
-      
-      const headers = new Headers();
-      headers.set("Content-Type", "application/json");
-      headers.set("Authorization", `Bearer ${accessToken || session?.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-      
       const response = await fetch(url.toString(), {
         method: "POST",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken || session?.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
         body: JSON.stringify(newCollection),
       });
       if (!response.ok) {
@@ -488,7 +464,7 @@ export function useRag(): UseRagReturn {
         return undefined;
       }
       const data = await response.json();
-      setCollections((prevCollections: Collection[]) => [...prevCollections, data]);
+      setCollections((prevCollections) => [...prevCollections, data]);
       return data;
     },
     [collections, session],
@@ -510,7 +486,7 @@ export function useRag(): UseRagReturn {
 
       // Find the collection to update
       const collectionToUpdate = collections.find(
-        (c: Collection) => c.uuid === collectionId,
+        (c) => c.uuid === collectionId,
       );
 
       if (!collectionToUpdate) {
@@ -528,7 +504,7 @@ export function useRag(): UseRagReturn {
 
       // Check if the new name already exists (only if name is changing)
       const nameExists = collections.some(
-        (c: Collection) =>
+        (c) =>
           c.name.toLowerCase() === trimmedNewName.toLowerCase() &&
           c.name !== collectionToUpdate.name,
       );
@@ -548,14 +524,13 @@ export function useRag(): UseRagReturn {
         metadata: metadata,
       };
 
-      const headers = new Headers();
-      headers.set("Content-Type", "application/json");
-      headers.set("Authorization", `Bearer ${session.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-
       const response = await fetch(url.toString(), {
         method: "PATCH",
-        headers,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
         body: JSON.stringify(updateData),
       });
 
@@ -569,8 +544,8 @@ export function useRag(): UseRagReturn {
       const updatedCollection = await response.json();
 
       // Update the collections state
-      setCollections((prevCollections: Collection[]) =>
-        prevCollections.map((collection: Collection) =>
+      setCollections((prevCollections) =>
+        prevCollections.map((collection) =>
           collection.uuid === collectionId ? updatedCollection : collection,
         ),
       );
@@ -596,7 +571,7 @@ export function useRag(): UseRagReturn {
       }
 
       const collectionToDelete = collections.find(
-        (c: Collection) => c.uuid === collectionId,
+        (c) => c.uuid === collectionId,
       );
 
       if (!collectionToDelete) {
@@ -606,13 +581,12 @@ export function useRag(): UseRagReturn {
       const url = getApiUrlOrThrow();
       url.pathname = `/collections/${collectionId}`;
 
-      const headers = new Headers();
-      headers.set("Authorization", `Bearer ${session.accessToken}`);
-      headers.set("Date", new Date().toUTCString());
-
       const response = await fetch(url.toString(), {
         method: "DELETE",
-        headers,
+        headers: {
+          Authorization: `Bearer ${session.accessToken}`,
+          Date: new Date().toUTCString(),
+        },
       });
 
       if (!response.ok) {
@@ -621,9 +595,9 @@ export function useRag(): UseRagReturn {
       }
 
       // Delete the collection itself
-      setCollections((prevCollections: Collection[]) =>
+      setCollections((prevCollections) =>
         prevCollections.filter(
-          (collection: Collection) => collection.uuid !== collectionId,
+          (collection) => collection.uuid !== collectionId,
         ),
       );
     },
