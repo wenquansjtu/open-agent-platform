@@ -31,7 +31,7 @@ export function getCollectionName(name: string | undefined) {
 /**
  * Uploads documents to a specific collection using the API.
  *
- * @param collectionName The name of the collection to add documents to.
+ * @param collectionId The name of the collection to add documents to.
  * @param files An array of File objects to upload.
  * @param metadatas Optional array of metadata objects, one for each file.
  *                  Each item in the array should be a serializable object (dictionary).
@@ -323,8 +323,8 @@ export function useRag(): UseRagReturn {
         throw new Error(`Failed to delete document: ${response.statusText}`);
       }
 
-      setDocuments((prevDocs) =>
-        prevDocs.filter((doc) => doc.metadata.file_id !== id),
+      setDocuments((prevDocs: Document[]) =>
+        prevDocs.filter((doc: Document) => doc.metadata.file_id !== id),
       );
     },
     [selectedCollection, session],
@@ -364,7 +364,7 @@ export function useRag(): UseRagReturn {
         session.accessToken,
         newDocs.map((d) => d.metadata),
       );
-      setDocuments((prevDocs) => [...prevDocs, ...newDocs]);
+      setDocuments((prevDocs: Document[]) => [...prevDocs, ...newDocs]);
     },
     [session],
   );
@@ -395,7 +395,7 @@ export function useRag(): UseRagReturn {
       await uploadDocuments(collectionId, [textFile], session.accessToken, [
         metadata,
       ]);
-      setDocuments((prevDocs) => [
+      setDocuments((prevDocs: Document[]) => [
         ...prevDocs,
         new Document({
           id: uuidv4(),
@@ -461,7 +461,7 @@ export function useRag(): UseRagReturn {
         return undefined;
       }
       const nameExists = collections.some(
-        (c) => c.name.toLowerCase() === trimmedName.toLowerCase(),
+        (c: Collection) => c.name.toLowerCase() === trimmedName.toLowerCase(),
       );
       if (nameExists) {
         console.warn(`Collection with name "${trimmedName}" already exists.`);
@@ -488,7 +488,7 @@ export function useRag(): UseRagReturn {
         return undefined;
       }
       const data = await response.json();
-      setCollections((prevCollections) => [...prevCollections, data]);
+      setCollections((prevCollections: Collection[]) => [...prevCollections, data]);
       return data;
     },
     [collections, session],
@@ -510,7 +510,7 @@ export function useRag(): UseRagReturn {
 
       // Find the collection to update
       const collectionToUpdate = collections.find(
-        (c) => c.uuid === collectionId,
+        (c: Collection) => c.uuid === collectionId,
       );
 
       if (!collectionToUpdate) {
@@ -528,7 +528,7 @@ export function useRag(): UseRagReturn {
 
       // Check if the new name already exists (only if name is changing)
       const nameExists = collections.some(
-        (c) =>
+        (c: Collection) =>
           c.name.toLowerCase() === trimmedNewName.toLowerCase() &&
           c.name !== collectionToUpdate.name,
       );
@@ -569,8 +569,8 @@ export function useRag(): UseRagReturn {
       const updatedCollection = await response.json();
 
       // Update the collections state
-      setCollections((prevCollections) =>
-        prevCollections.map((collection) =>
+      setCollections((prevCollections: Collection[]) =>
+        prevCollections.map((collection: Collection) =>
           collection.uuid === collectionId ? updatedCollection : collection,
         ),
       );
@@ -596,7 +596,7 @@ export function useRag(): UseRagReturn {
       }
 
       const collectionToDelete = collections.find(
-        (c) => c.uuid === collectionId,
+        (c: Collection) => c.uuid === collectionId,
       );
 
       if (!collectionToDelete) {
@@ -621,9 +621,9 @@ export function useRag(): UseRagReturn {
       }
 
       // Delete the collection itself
-      setCollections((prevCollections) =>
+      setCollections((prevCollections: Collection[]) =>
         prevCollections.filter(
-          (collection) => collection.uuid !== collectionId,
+          (collection: Collection) => collection.uuid !== collectionId,
         ),
       );
     },
