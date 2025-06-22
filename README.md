@@ -1,12 +1,12 @@
-# Open Agent Platform
+# ForgeAI
 
-Open Agent Platform is a no-code agent building platform. These agents can be connected to a wide range of tools, RAG servers, and even other agents through an Agent Supervisor!
+ForgeAI is a no-code agent building platform. These agents can be connected to a wide range of tools, RAG servers, and even other agents through an Agent Supervisor!
 
 <video src="https://github.com/user-attachments/assets/bc91304b-e704-41d7-a0cd-9806d37640c0.mp4" controls="controls"></video>
 
-## Overview
+## What is ForgeAI?
 
-Open Agent Platform provides a modern, web-based interface for creating, managing, and interacting with LangGraph agents. It's designed with simplicity in mind, making it accessible to users without technical expertise, while still offering advanced capabilities for developers.
+ForgeAI provides a modern, web-based interface for creating, managing, and interacting with LangGraph agents. It's designed with simplicity in mind, making it accessible to users without technical expertise, while still offering advanced capabilities for developers.
 
 ## Key Features
 
@@ -23,14 +23,14 @@ For detailed setup instructions, guides, and API references, please visit our **
 
 ## Getting Started
 
-To quickly get started with Open Agent Platform, check out the [Quickstart Guide](https://docs.oap.langchain.com/quickstart) in our documentation.
+To quickly get started with ForgeAI, check out the [Quickstart Guide](https://docs.oap.langchain.com/quickstart) in our documentation.
 
 ## Community and Support
 
 - **GitHub Issues**: Report bugs or request features [here](https://github.com/langchain-ai/open-agent-platform/issues).
 - **Discussions**: Join the conversation on our [GitHub Discussions page](https://github.com/langchain-ai/open-agent-platform/discussions).
 
-We encourage you to explore the platform, build your own agents, and contribute to the Open Agent Platform community!
+We encourage you to explore the platform, build your own agents, and contribute to the ForgeAI community!
 
 # Concepts/FAQ
 
@@ -62,6 +62,6 @@ No. All agents you intend to use with OAP must be LangGraph agents, deployed on 
 
 ### Why is my agent's config is only showing string inputs, and not custom fields?
 
-First, ensure you're using the latest version of LangGraph. If running locally, make sure you're using the latest version of the LangGraph API, and CLI packages. If deploying, make sure you've published a revision after 05/14/2025. Then, check that you have the `x_oap_ui_config` metadata set on your configurable fields. If you have, check that your configurable object is defined using LangGraph Zod (if using TypeScript), as this is required for the Open Agent Platform to recognize & render your UI fields.
+First, ensure you're using the latest version of LangGraph. If running locally, make sure you're using the latest version of the LangGraph API, and CLI packages. If deploying, make sure you've published a revision after 05/14/2025. Then, check that you have the `x_oap_ui_config` metadata set on your configurable fields. If you have, check that your configurable object is defined using LangGraph Zod (if using TypeScript), as this is required for the ForgeAI to recognize & render your UI fields.
 
 If it's still not working, confirm your `x_oap_ui_config` metadata has the proper fields set.

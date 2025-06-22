@@ -1,11 +1,23 @@
 ---
-title: 'Custom Agents Overview'
-description: 'Building your own agents for the Open Agent Platform'
+title: 'Custom Agents'
+description: 'Building your own agents for the ForgeAI'
 ---
 
-# Building Your Own Agents
+# Custom Agents
 
-We built Open Agent Platform with custom agents in mind. Although we offer a few pre-built agents, we encourage you to build your own agents, and use OAP as a platform to prototype, test and use them! This guide will help you build agents that are compatible with all of Open Agent Platform's features.
+We built ForgeAI with custom agents in mind. Although we offer a few pre-built agents, we encourage you to build your own agents, and use OAP as a platform to prototype, test and use them! This guide will help you build agents that are compatible with all of ForgeAI's features.
+
+## Overview
+
+Building custom agents for ForgeAI involves three main steps:
+
+1. Building your agent using LangGraph
+2. Deploying your agent to LangGraph Platform or running it locally
+3. Configuring your ForgeAI to connect to your deployed agent
+
+## Why Build Custom Agents?
+
+Building custom agents allows you to create specialized AI assistants that can be easily managed and used through the ForgeAI interface.
 
 ## Platform Requirements
 
@@ -25,7 +37,7 @@ The typical development flow for creating custom agents involves:
 
 1. Developing and testing your agent locally using LangGraph
 2. Deploying your agent to LangGraph Platform
-3. Configuring your Open Agent Platform to connect to your deployed agent
+3. Configuring your ForgeAI to connect to your deployed agent
 4. Testing and refining your agent through the OAP interface
 
 ## Getting Started
@@ -37,5 +49,3 @@ To get started with building your own agents, we recommend:
    - [Tools Agent](https://github.com/langchain-ai/oap-langgraph-tools-agent)
    - [Supervisor Agent](https://github.com/langchain-ai/oap-agent-supervisor)
 3. Understanding how to make your agent configurable, as detailed in the [Configuration](/custom-agents/configuration) section
-
-Building custom agents allows you to create specialized AI assistants that can be easily managed and used through the Open Agent Platform interface.

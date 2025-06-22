@@ -1,3 +1,3 @@
-# Open Agent Platform Web App
+# ForgeAI Web App
 
-This is the web app for the Open Agent Platform.
+This is the web app for the ForgeAI.

@@ -1,11 +1,11 @@
 ---
 title: 'Agent Configuration'
-description: 'Making your agents configurable in the Open Agent Platform'
+description: 'Making your agents configurable in the ForgeAI'
 ---
 
 # Agent Configuration
 
-To allow your agent to be configurable in Open Agent Platform, you must set custom configuration metadata on your agent's configurable fields. There are currently three types of configurable fields:
+To allow your agent to be configurable in ForgeAI, you must set custom configuration metadata on your agent's configurable fields. There are currently three types of configurable fields:
 
 1. **General Agent Config:** This consists of general configuration settings like the model name, system prompt, temperature, etc. These are where essentially all of your custom configurable fields should go.
 2. **MCP Tools Config:** This is the config which defines the MCP server and tools to give your agent access to.
@@ -17,7 +17,7 @@ This section assumes you have a basic understanding of configurable fields in La
 
 ## General Agent Config
 
-By default, Open Agent Platform will show *all* fields listed in your configurable object as configurable in the UI. Each field will be configurable via a simple text input. To add more complex configurable field types (e.g boolean, dropdown, slider, etc), you should add a `x_oap_ui_config` object to `metadata` on the field.
+By default, ForgeAI will show *all* fields listed in your configurable object as configurable in the UI. Each field will be configurable via a simple text input. To add more complex configurable field types (e.g boolean, dropdown, slider, etc), you should add a `x_oap_ui_config` object to `metadata` on the field.
 
 Inside this object is where you define the custom UI config for that specific field. The available options are:
 
@@ -136,6 +136,26 @@ export const GraphConfiguration = z.object({
             label: "o4",
             value: "openai/o4",
           },
+          {
+            label: "DeepSeek Coder",
+            value: "deepseek/deepseek-coder",
+          },
+          {
+            label: "DeepSeek Chat",
+            value: "deepseek/deepseek-chat",
+          },
+          {
+            label: "DeepSeek Coder Instruct",
+            value: "deepseek/deepseek-coder-instruct",
+          },
+          {
+            label: "DeepSeek Coder 33B",
+            value: "deepseek/deepseek-coder-33b-instruct",
+          },
+          {
+            label: "Morpheus",
+            value: "morpheus/morpheus",
+          },
         ],
       },
     }),
@@ -169,6 +189,7 @@ export const GraphConfiguration = z.object({
         default: 4000,
         min: 1,
         description: "The maximum number of tokens to generate",
+        disabled: true,
       },
     }),
   systemPrompt: z
@@ -213,6 +234,11 @@ class GraphConfigPydantic(BaseModel):
                     {"label": "GPT 4o", "value": "openai:gpt-4o"},
                     {"label": "GPT 4o mini", "value": "openai:gpt-4o-mini"},
                     {"label": "GPT 4.1", "value": "openai:gpt-4.1"},
+                    {"label": "DeepSeek Coder", "value": "deepseek:deepseek-coder"},
+                    {"label": "DeepSeek Chat", "value": "deepseek:deepseek-chat"},
+                    {"label": "DeepSeek Coder Instruct", "value": "deepseek:deepseek-coder-instruct"},
+                    {"label": "DeepSeek Coder 33B", "value": "deepseek:deepseek-coder-33b-instruct"},
+                    {"label": "Morpheus", "value": "morpheus:morpheus"},
                 ],
             }
         }
@@ -238,6 +264,7 @@ class GraphConfigPydantic(BaseModel):
                 "default": 4000,
                 "min": 1,
                 "description": "The maximum number of tokens to generate",
+                "disabled": True,
             }
         }
     )
@@ -258,7 +285,7 @@ workflow = StateGraph(State, config_schema=GraphConfigPydantic)
 
 ## MCP Tools Config
 
-To allow an agent to be configurable with MCP tools in Open Agent Platform, you must set a specific `x_oap_config_type` metadata field on the configurable field. This field should be set to `oap_mcp_tools_config`. You only need to set this on a single field in your configurable object. Optionally, you can provide a default value for this field, which will be used when the user is creating a new agent.
+To allow an agent to be configurable with MCP tools in ForgeAI, you must set a specific `x_oap_config_type` metadata field on the configurable field. This field should be set to `oap_mcp_tools_config`. You only need to set this on a single field in your configurable object. Optionally, you can provide a default value for this field, which will be used when the user is creating a new agent.
 
 Here's an example in TypeScript:
 

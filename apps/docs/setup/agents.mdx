@@ -1,9 +1,11 @@
 ---
-title: 'Agents Setup'
-description: 'Deploy and configure your agents for Open Agent Platform'
+title: 'Agent Setup'
+description: 'Deploy and configure your agents for ForgeAI'
 ---
 
-The first step in setting up Open Agent Platform is to deploy and configure your agents. To help with this, we're releasing two pre-built agents, customized specifically for Open Agent Platform:
+# Agent Setup
+
+The first step in setting up ForgeAI is to deploy and configure your agents. To help with this, we're releasing two pre-built agents, customized specifically for ForgeAI:
 
 - [Tools Agent](https://github.com/langchain-ai/oap-langgraph-tools-agent)
 - [Supervisor Agent](https://github.com/langchain-ai/oap-agent-supervisor)
@@ -18,7 +20,7 @@ To use these agents in your instance, you should:
 
 ## Configuration
 
-Once deployed or running locally, you can connect them to your instance of Open Agent Platform by setting the configuration environment variables. The configuration object is as follows:
+Once deployed or running locally, you can connect them to your instance of ForgeAI by setting the configuration environment variables. The configuration object is as follows:
 
 ```json
 {
@@ -27,7 +29,7 @@ Once deployed or running locally, you can connect them to your instance of Open 
   "deploymentUrl": "The API URL to your deployment.",
   "name": "A custom name for your deployment",
   "isDefault": "Whether this deployment is the default deployment. Should only be set to true for one deployment.",
-  "defaultGraphId": "The graph ID of the default graph for the entire OAP instance. We recommend this is set to the graph ID of a graph which supports RAG & MCP tools. This must be set in the same deployment which isDefault is set to true on. Optional, but required in at least one deployment.",
+  "defaultGraphId": "The graph ID of the default graph for the entire ForgeAI instance. We recommend this is set to the graph ID of a graph which supports RAG & MCP tools. This must be set in the same deployment which isDefault is set to true on. Optional, but required in at least one deployment.",
 }
 ```
   <Tip>
@@ -40,7 +42,7 @@ To easily find your project & tenant IDs for agents deployed to LangGraph Platfo
 
 ## Setting Environment Variables
 
-After constructing the JSON objects with these values for each of the deployments you want to include in your Open Agent Platform instance, you should stringify them into a single, flat array, then set them under the `NEXT_PUBLIC_DEPLOYMENTS` environment variable inside the `apps/web/` directory.
+After constructing the JSON objects with these values for each of the deployments you want to include in your ForgeAI instance, you should stringify them into a single, flat array, then set them under the `NEXT_PUBLIC_DEPLOYMENTS` environment variable inside the `apps/web/` directory.
 
 The following is an example of what this variable would look like for a single, local deployment:
 

@@ -66,6 +66,7 @@ interface ConfigFieldProps {
   max?: number;
   step?: number;
   className?: string;
+  disabled?: boolean;
   // Optional props for external state management
   value?: any;
   setValue?: (value: any) => void;
@@ -83,6 +84,7 @@ export function ConfigField({
   max,
   step = 1,
   className,
+  disabled = false,
   value: externalValue, // Rename to avoid conflict
   setValue: externalSetValue, // Rename to avoid conflict
   agentId,
@@ -158,6 +160,7 @@ export function ConfigField({
             id={id}
             checked={!!currentValue} // Use currentValue
             onCheckedChange={handleChange}
+            disabled={disabled}
           />
         )}
       </div>
@@ -174,6 +177,7 @@ export function ConfigField({
           value={currentValue || ""} // Use currentValue
           onChange={(e) => handleChange(e.target.value)}
           placeholder={placeholder}
+          disabled={disabled}
         />
       )}
 
@@ -184,6 +188,7 @@ export function ConfigField({
           onChange={(e) => handleChange(e.target.value)}
           placeholder={placeholder}
           className="min-h-[100px]"
+          disabled={disabled}
         />
       )}
 
@@ -209,6 +214,7 @@ export function ConfigField({
           min={min}
           max={max}
           step={step}
+          disabled={disabled}
         />
       )}
 
@@ -240,7 +246,7 @@ export function ConfigField({
             max={max}
             step={step}
             onValueChange={(vals) => handleChange(vals[0])}
-            disabled={min === undefined || max === undefined} // Disable slider if min/max not provided
+            disabled={disabled || min === undefined || max === undefined} // Disable slider if min/max not provided or explicitly disabled
           />
         </div>
       )}
@@ -249,6 +255,7 @@ export function ConfigField({
         <Select
           value={currentValue ?? ""} // Use currentValue, provide default empty string if undefined/null
           onValueChange={handleChange}
+          disabled={disabled}
         >
           <SelectTrigger>
             {/* Display selected value or placeholder */}
@@ -292,6 +299,7 @@ export function ConfigField({
               jsonError &&
                 "border-red-500 focus:border-red-500 focus-visible:ring-red-500", // Add error styling
             )}
+            disabled={disabled}
           />
           <div className="flex w-full items-start justify-between gap-2 pt-1">
             {" "}

@@ -1,53 +1,83 @@
 ---
 title: 'Introduction'
-description: 'An introduction to Open Agent Platform'
+description: 'An introduction to ForgeAI'
 ---
 
-Open Agent Platform is a citizen developer platform, allowing non-technical users to build, prototype, and use agents. These agents can be connected to a wide range of tools, RAG servers, and even other agents through an Agent Supervisor!
+# Welcome to ForgeAI
+
+ForgeAI is a citizen developer platform, allowing non-technical users to build, prototype, and use agents. These agents can be connected to a wide range of tools, RAG servers, and even other agents through an Agent Supervisor!
+
+<Note>
+This documentation is for the latest version of ForgeAI. If you're looking for the legacy documentation, you can find it [here](https://docs.oap.langchain.com).
+</Note>
+
+## Quick Start
+
+Get your ForgeAI running quickly
 
 <CardGroup cols={2}>
   <Card
-    title="Quick Start"
-    icon="bolt"
+    title="Quickstart"
+    icon="rocket"
     href="/quickstart"
   >
-    Get your Open Agent Platform running quickly
+    Get your ForgeAI running quickly
   </Card>
   <Card
-    title="Agent Setup"
-    icon="robot"
+    title="Setup"
+    icon="settings"
     href="/setup/agents"
   >
     Deploy and configure your agents
   </Card>
+</CardGroup>
+
+## Features
+
+<CardGroup cols={2}>
   <Card
-    title="RAG Integration"
+    title="Agent Management"
+    icon="bot"
+    href="/setup/agents"
+  >
+    Deploy and manage your LangGraph agents
+  </Card>
+  <Card
+    title="Tool Integration"
+    icon="wrench"
+    href="/setup/mcp-server"
+  >
+    Connect your agents to MCP tools
+  </Card>
+  <Card
+    title="RAG Support"
     icon="database"
     href="/setup/rag-server"
   >
-    Connect your agents to knowledge bases
+    Add RAG capabilities to your agents
   </Card>
   <Card
-    title="MCP Server"
-    icon="toolbox"
-    href="/setup/mcp-server"
+    title="Custom Agents"
+    icon="code"
+    href="/custom-agents/overview"
   >
-    Extend your agents with powerful tools
+    Build your own custom agents
   </Card>
 </CardGroup>
 
-## What is Open Agent Platform?
+## What is ForgeAI?
 
-Open Agent Platform provides a modern, web-based interface for creating, managing, and interacting with LangGraph agents. It's designed with simplicity in mind, making it accessible to users without technical expertise, while still offering advanced capabilities for developers.
+ForgeAI provides a modern, web-based interface for creating, managing, and interacting with LangGraph agents. It's designed with simplicity in mind, making it accessible to users without technical backgrounds while still providing powerful capabilities for developers.
 
-## Key Features
+### Key Features
 
-- **Agent Management**: Build, configure, and interact with agents through an intuitive interface
-- **RAG Integration**: First-class support for Retrieval Augmented Generation with [LangConnect](https://github.com/langchain-ai/langconnect)
-- **MCP Tools**: Connect your agents to external tools through MCP servers
-- **Agent Supervision**: Orchestrate multiple agents working together through an Agent Supervisor
-- **Authentication**: Built-in authentication and access control
+- **No-Code Agent Building**: Create and configure agents through an intuitive web interface
+- **Tool Integration**: Connect agents to MCP servers for tool access
+- **RAG Support**: Add knowledge retrieval capabilities to your agents
+- **Agent Supervision**: Create hierarchical agent systems with supervisor agents
+- **Real-time Chat**: Interact with your agents through a modern chat interface
+- **Multi-tenant Support**: Deploy multiple agent deployments in a single instance
 
-## Getting Started
+### Getting Started
 
-Follow our [quickstart guide](/quickstart) to set up your own instance of Open Agent Platform.
+Follow our [quickstart guide](/quickstart) to set up your own instance of ForgeAI.

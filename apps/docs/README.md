@@ -1,4 +1,4 @@
-# Open Agent Platform Docs
+# ForgeAI Docs
 
 The OAP docs are built with Mintlify. To preview the docs locally, run the following command:
 

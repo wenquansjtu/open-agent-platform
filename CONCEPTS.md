@@ -1,6 +1,6 @@
 # Concepts
 
-This doc contains a conceptual overview of different concepts and features of the Open Agent Platform.
+This doc contains a conceptual overview of different concepts and features of the ForgeAI.
 
 ## Agent
 

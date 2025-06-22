@@ -66,6 +66,11 @@ export type ConfigurableFieldUIMetadata = {
    * This is only applicable for number fields.
    */
   step?: number;
+  /**
+   * Whether the field is disabled and cannot be edited by the user.
+   * @default false
+   */
+  disabled?: boolean;
 };
 
 export type ConfigurableFieldMCPMetadata = {
