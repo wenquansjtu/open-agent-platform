@@ -12,7 +12,7 @@ export function LangGraphLogoSVG({
       width={width}
       height={height}
       viewBox="0 0 98 51"
-      fill="none"Add commentMore actions
+      fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
     ></svg>
