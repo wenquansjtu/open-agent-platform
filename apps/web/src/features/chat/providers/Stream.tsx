@@ -154,8 +154,7 @@ export const StreamProvider: React.FC<{ children: ReactNode }> = ({
               </h1>
             </div>
             <p className="text-muted-foreground">
-              Welcome to ForgeAI's chat! To continue, please select
-              an agent to chat with.
+              ForgeAI empowers anyone to create intelligent, personalized AI Agents in minutes — no coding, no complexity, just pure creativity. Whether you're automating tasks, simulating human behavior, or building your digital twin, ForgeAI gives you the tools to shape minds that think like you. Powered by MATRIX AI Network, built for the future of intelligent autonomy.
             </p>
           </div>
           <div className="mb-24 grid grid-cols-[1fr_auto] gap-4 px-6 pt-4">
