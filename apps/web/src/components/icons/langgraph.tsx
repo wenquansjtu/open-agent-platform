@@ -8,5 +8,6 @@ export function LangGraphLogoSVG({
   className?: string;
 }) {
   return (
+     <svg></svg>
   );
 }
